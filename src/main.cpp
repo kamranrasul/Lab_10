@@ -1,14 +1,14 @@
 #include <Arduino.h>
 
 // Pin Array definition
-int8_t ledPin[8] = { 2, 3, 4, 5, 6, 7, 8, 9 };
+int8_t ledPin[8] = {2, 3, 4, 5, 6, 7, 8, 9};
 
 // pattern
 int8_t count1 = 0;
 int8_t count2 = 7;
 
 // flag for up and down streams
-bool flag = false;
+bool flag = true;
 
 void setup()
 {
@@ -36,33 +36,14 @@ void loop()
   }
 
   // setting the Pins as required
-  digitalWrite(ledPin[count1], HIGH);
-  digitalWrite(ledPin[count2], HIGH);
+  digitalWrite(ledPin[flag ? count1++ : count1--], HIGH);
+  digitalWrite(ledPin[flag ? count2-- : count2++], HIGH);
 
   // switching from down to up count
-  if (count1 == 3)
-  {
-    flag = false;
-  }
+  flag = count1 == 3 ? false : flag;
 
   // switching from up to down count
-  if (count1 == 0)
-  {
-    flag = true;
-  }
-
-  if (flag)
-  {
-    // switching the Pin numbers
-    count1++;
-    count2--;
-  }
-  else
-  {
-    // switching the Pin numbers
-    count1--;
-    count2++;
-  }
+  flag = count1 == 0 ? true : flag;
 
   Serial.print("Count1: ");
   Serial.println(count1);
@@ -72,4 +53,4 @@ void loop()
 
   // wait for 1 second
   delay(500);
-  }
+}
