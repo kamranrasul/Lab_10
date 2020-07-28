@@ -4,8 +4,7 @@
 int8_t ledPin[8] = {2, 3, 4, 5, 6, 7, 8, 9};
 
 // pattern
-int8_t count1 = 0;
-int8_t count2 = 7;
+int8_t count = 3;
 
 // flag for up and down streams
 bool flag = true;
@@ -35,22 +34,22 @@ void loop()
     digitalWrite(ledPin[i], LOW);
   }
 
-  // setting the Pins as required
-  digitalWrite(ledPin[flag ? count1++ : count1--], HIGH);
-  digitalWrite(ledPin[flag ? count2-- : count2++], HIGH);
-
   // switching from down to up count
-  flag = count1 == 3 ? false : flag;
+  flag = count == 3 ? true : flag;
 
   // switching from up to down count
-  flag = count1 == 0 ? true : flag;
+  flag = count == 0 ? false : flag;
 
-  Serial.print("Count1: ");
-  Serial.println(count1);
+  // setting the Pins as required
+  digitalWrite(ledPin[3 - count], HIGH);
+  digitalWrite(ledPin[4 + count], HIGH);
 
-  Serial.print("Count2: ");
-  Serial.println(count2);
+  // changing the count value
+  count = flag ? --count : ++count;
+
+  Serial.print("Count: ");
+  Serial.println(count);
 
   // wait for 1 second
-  delay(500);
+  delay(1000);
 }
