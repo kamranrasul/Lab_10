@@ -34,11 +34,8 @@ void loop()
     digitalWrite(ledPin[i], LOW);
   }
 
-  // switching from down to up count
-  flag = count == 3 ? true : flag;
-
-  // switching from up to down count
-  flag = count == 0 ? false : flag;
+  // switching count up/down
+  flag = count == 3 ? true : (count == 0 ? false : flag);
 
   // setting the Pins as required
   digitalWrite(ledPin[3 - count], HIGH);
